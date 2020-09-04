@@ -16,7 +16,7 @@ import Noti from './Noti'
 import Watched from './Watched'
 import Favorties from './Favorites'
 
-export default ({match}) => {
+export default ({ match }) => {
     console.log("match", match.path)
     return (
         <main>
@@ -38,12 +38,12 @@ export default ({match}) => {
                 <div className="container">
                     <div className="row">
                         <AsideUserLayout />
-                        {/* END ASIDE */}
-                        <Noti />
-                                {/* <Route path={[`${match.path}`,`${match.path}/info`]} component={Info} /> */}
-                                {/* <Route exact path="/noti" component={Noti} />
-                                <Route path="/favorites" component={Favorties} />
-                                <Route path="/watched" component={Watched} /> */}
+                        <Switch>
+                            <Route path={`${match.path}/noti`} component={Noti} />
+                            <Route path={`${match.path}/favorites`} component={Favorties} />
+                            <Route path={`${match.path}/watched`} component={Watched} />
+                            <Route path={[`${match.path}`, `${match.path}/info`]} component={Info} />
+                        </Switch>
                     </div>
                 </div>
             </section>

@@ -22,7 +22,7 @@ const Favorites = () => {
                         </div>
                     </div>
                 </a>
-                <a href>
+                <a href="/#">
                     <div className="noti-item">
                         <img
                             src="https://picsum.photos/200"

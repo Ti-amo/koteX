@@ -12,7 +12,6 @@ import Header from '../src/components/layouts/Header'
 import Footer from '../src/components/layouts/Footer'
 import Home from '../src/pages/Home'
 import Product from '../src/pages/Product'
-import UserInfo from '../src/pages/UserInfo'
 import Users from '../src/pages/Users'
 
 const App = () => {
@@ -21,9 +20,9 @@ const App = () => {
       <Header />
       <Router>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/users" component={Users} />
-          <Route exact path="/products" component={Product} />
+          <Route path="/users" component={Users} />
+          <Route path="/products" component={Product} />
+          <Route path="/" component={Home} />
         </Switch>
       </Router>
       <Footer />
