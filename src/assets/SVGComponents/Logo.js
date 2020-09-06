@@ -46,12 +46,12 @@ function Logo(props) {
           stroke="none"
         >
           <tspan y={0} x="0 241.69501 452.763 588.92401 784.86298">
-            {"KoteX"}
+            {" KoteX "}
           </tspan>
         </text>
       </g>
     </svg>
-  );
+  )
 }
 
 export default Logo;

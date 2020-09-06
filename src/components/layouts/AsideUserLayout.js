@@ -1,10 +1,11 @@
 import React from 'react'
+import AvatarImg from '../../assets/images/avatar.jpg'
 
 const AsideUserLayout = () => {
     return (
         <aside className="menu-left col-lg-3">
             <div className="account">
-                <img src="https://picsum.photos/200" alt="pict" />
+                <img className="avatar" src={AvatarImg} alt="pict" />
                 <div>
                     <p>Tài khoản của</p>
                     <p>User</p>
