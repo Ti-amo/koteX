@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,21 +14,25 @@ import Home from '../src/pages/Home'
 import Product from '../src/pages/Product'
 import Users from '../src/pages/Users'
 import Login from './pages/Users/Login';
+import { AuthProvider } from '../src/components/auth/Auth'
+import PrivateRoute from '../src/components/auth/PrivateRoute'
+import * as firebase from 'firebase'
 
 const App = () => {
+
   return (
-    <React.Fragment>
+    <AuthProvider>
       <Header />
       <Router>
         <Switch>
-          <Route path="/users/login" component={Login} />
+          <Route path="/login" component={Login} />
           <Route path="/users" component={Users} />
           <Route path="/products" component={Product} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>
       <Footer />
-    </React.Fragment>
+    </AuthProvider>
   );
 }
 

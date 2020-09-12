@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import '../assets/styles/base.css'
 import '../assets/styles/header.css'
 import '../assets/styles/swiper.css'
@@ -12,6 +13,23 @@ import PCImg from '../assets/images/desktop.png'
 import HeadphoneImg from '../assets/images/headphone.png'
 
 const Home = () => {
+
+    const [data, setData] = useState([])
+    const token = localStorage.getItem("token")
+    useEffect(() => {
+        async function fetchData() {
+            const result = await axios.get(`${process.env.REACT_APP_API}category/21/product`);
+            setData(result.data);
+        }
+        fetchData()
+    }, [])
+
+    const getCheapestPrice = (store) => {
+        const minRest = Math.min(...store.map(({ price }) => price));
+        // console.log(minRest);
+        return minRest;
+    }
+    // console.log("DATA", data)
     return (
         <main>
             <section className="swiper container">
@@ -252,100 +270,32 @@ const Home = () => {
             <section className="product-slide container">
                 <h2 className="product-slide__header">Sản phẩm hot</h2>
                 <div className="container-fluid">
-                    <article className="card">
-                        <a href="/#">
-                            <img
-                                className="card-img-top"
-                                src="https://hanoicomputercdn.com/media/product/250_51287_id_cooling_se_234_argb_1.jpg"
-                                alt="Card cap"
-                            />
-                            <div className="card-body">
-                                <div className="card-text">
-                                    Laptop ASUS VivoBook 15 A512FA-EJ1281T (15.6"
-                                    FHD/i5-10210U/8GB/512GB SSD/Intel UHD/Win10/1.7kg)
-            </div>
-                                <div className="card-price">
-                                    <span className="true-price">15.990.000 đ</span>
-                                    <span className="price">16.990.000 đ</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-                    <article className="card">
-                        <a href="/#">
-                            <img
-                                className="card-img-top"
-                                src="https://lh3.googleusercontent.com/u-Upc1CuBImIOC-MWHtpU2BT3VystvQX1fLUmtL3vd-SZWMexqNMgaEq-Y25hTiKTOI0Ro0E_pwhjBmak7TG=w500-rw"
-                                alt="Card cap"
-                            />
-                            <div className="card-body">
-                                <div className="card-text">
-                                    Chuột máy tính không dây Logitech M187 (Xanh)
-            </div>
-                                <div className="card-price">
-                                    <span className="true-price">310.000 đ</span>
-                                    <span className="price">330.000 đ</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-                    <article className="card">
-                        <a href="/#">
-                            <img
-                                className="card-img-top"
-                                src="https://lh3.googleusercontent.com/Bh3dQOXldLMQN04Ks25TGufsHw9M6v4Qvg7IdTSMsFD0br8jvVo7BGOT9nmhal3phZCdCoK73PEbEpHdpZI=w500-rw"
-                                alt="Card cap"
-                            />
-                            <div className="card-body">
-                                <div className="card-text">
-                                    Laptop MSI GF63 Thin 10SCSR-077VN (15.6" FHD
-                                    120Hz/i7-10750H/8GB/512GB SSD/GeForce GTX 1650Ti/Win10/2.2kg)
-            </div>
-                                <div className="card-price">
-                                    <span className="true-price">27.990.000 đ</span>
-                                    <span className="price">29.990.000 đ</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-                    <article className="card">
-                        <a href="/#">
-                            <img
-                                className="card-img-top"
-                                src="https://lh3.googleusercontent.com/Bh3dQOXldLMQN04Ks25TGufsHw9M6v4Qvg7IdTSMsFD0br8jvVo7BGOT9nmhal3phZCdCoK73PEbEpHdpZI=w500-rw"
-                                alt="Card cap"
-                            />
-                            <div className="card-body">
-                                <div className="card-text">
-                                    Laptop MSI GF63 Thin 10SCSR-077VN (15.6" FHD
-                                    120Hz/i7-10750H/8GB/512GB SSD/GeForce GTX 1650Ti/Win10/2.2kg)
-            </div>
-                                <div className="card-price">
-                                    <span className="true-price">27.990.000 đ</span>
-                                    <span className="price">29.990.000 đ</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-                    <article className="card">
-                        <a href="/#">
-                            <img
-                                className="card-img-top"
-                                src="https://lh3.googleusercontent.com/Bh3dQOXldLMQN04Ks25TGufsHw9M6v4Qvg7IdTSMsFD0br8jvVo7BGOT9nmhal3phZCdCoK73PEbEpHdpZI=w500-rw"
-                                alt="Card cap"
-                            />
-                            <div className="card-body">
-                                <div className="card-text">
-                                    Laptop MSI GF63 Thin 10SCSR-077VN (15.6" FHD
-                                    120Hz/i7-10750H/8GB/512GB SSD/GeForce GTX 1650Ti/Win10/2.2kg)
-            </div>
-                                <div className="card-price">
-                                    <span className="true-price">27.990.000 đ</span>
-                                    <span className="price">29.990.000 đ</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
+                    {data.filter(item => parseInt(getCheapestPrice(JSON.parse(item.merchant_store.replaceAll("'", "\"")))) > 0)
+                        .map((item, idx) => {
+                            let store = JSON.parse(item.merchant_store.replaceAll("'", "\""));
+                            let cheapestPrice = store.length !== 0 ? getCheapestPrice(store) : 0;
+                            return (
+                                <article className="card" key={idx}>
+                                    <a href="/#">
+                                        <img
+                                            className="card-img-top"
+                                            src={item.image_url}
+                                            alt="Card cap"
+                                            height="226"
+                                        />
+                                        <div className="card-body">
+                                            <div className="card-text">
+                                                {item.name}
+                                            </div>
+                                            <div className="card-price">
+                                                <span className="true-price">{cheapestPrice} đ</span>
+                                                <span className="price">16.990.000 đ</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </article>
+                            )
+                        })}
                 </div>
             </section>
             {/* END HOT PRODUCT */}
@@ -570,7 +520,7 @@ const Home = () => {
             <section className="subscribe container">
                 <p>Đăng ký để không bỏ lỡ bất kỳ ưu đãi đặc biệt nào cho riêng bạn</p>
                 <div>
-                    <input type="text" name id placeholder="Nhập địa chỉ email của bạn" />
+                    <input type="text" name="helo" id="gl" placeholder="Nhập địa chỉ email của bạn" />
                     <button type="submit">Gửi</button>
                 </div>
             </section>
