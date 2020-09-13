@@ -71,7 +71,6 @@ const Login = ({ props }) => {
                                             autoComplete="on"
                                             name="loginKey"
                                             maxLength={128}
-                                            defaultValue
                                         />
                                     </div>
                                 </div>
@@ -83,7 +82,6 @@ const Login = ({ props }) => {
                                             autoComplete="current-password"
                                             name="password"
                                             maxLength={16}
-                                            defaultValue
                                         />
                                     </div>
                                 </div>
@@ -102,14 +100,14 @@ const Login = ({ props }) => {
 
                                 </div>
                                 <div className="other-login-wrapper">
-                                    <button className="button-wrap facebook" onClick={signIn}>
+                                    <button className="button-wrap facebook border" style={{border: "none"}} onClick={signIn}>
                                         <i className=" icon fab fa-facebook" />
                                         <span>Facebook</span>
                                     </button>
-                                    <a className="button-wrap google" href="/#">
+                                    <button className="button-wrap google" style={{border: "none"}}>
                                         <i className=" icon fab fa-google" />
                                         <span>Google</span>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                             <div className="signup-wrapper">

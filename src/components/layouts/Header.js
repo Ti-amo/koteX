@@ -15,9 +15,7 @@ const Header = () => {
 
     firebase.auth().onAuthStateChanged(user => {
       setIsSignIn(!!user)
-      console.log("JAGSKDFG", user)
       setUserName(user == null ? "Đăng nhập" : user.displayName)
-      // setUser
     })
   }, [])
 

@@ -18,7 +18,7 @@ const Home = () => {
     const token = localStorage.getItem("token")
     useEffect(() => {
         async function fetchData() {
-            const result = await axios.get(`${process.env.REACT_APP_API}category/21/product`);
+            const result = await axios.get(`${process.env.REACT_APP_API}category/18/product`);
             setData(result.data);
         }
         fetchData()
@@ -270,13 +270,15 @@ const Home = () => {
             <section className="product-slide container">
                 <h2 className="product-slide__header">Sản phẩm hot</h2>
                 <div className="container-fluid">
-                    {data.filter(item => parseInt(getCheapestPrice(JSON.parse(item.merchant_store.replaceAll("'", "\"")))) > 0)
+                    {data.filter(item => item.merchant_store.length > 2)
                         .map((item, idx) => {
                             let store = JSON.parse(item.merchant_store.replaceAll("'", "\""));
                             let cheapestPrice = store.length !== 0 ? getCheapestPrice(store) : 0;
                             return (
                                 <article className="card" key={idx}>
-                                    <a href="/#">
+                                    <a href={`/${item.product_id}`} onClick={() => {
+                                        console.log("PRODUCT", item)
+                                    }}>
                                         <img
                                             className="card-img-top"
                                             src={item.image_url}
