@@ -15,9 +15,12 @@ import Product from '../src/pages/Product'
 import Users from '../src/pages/Users'
 import Login from './pages/Users/Login';
 import { AuthProvider } from '../src/components/auth/Auth'
-import PrivateRoute from '../src/components/auth/PrivateRoute'
-import * as firebase from 'firebase'
 import ProductDetail from './pages/ProductDetail';
+import * as firebase from 'firebase'
+// For the default version
+
+// For the default version
+
 
 const App = () => {
 
@@ -29,7 +32,7 @@ const App = () => {
           <Route path="/login" component={Login} />
           <Route path="/users" component={Users} />
           <Route path="/products" component={Product} />
-          <Route path="/:productId" component={ProductDetail} />
+          <Route path="/product/:productId" component={ProductDetail} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>

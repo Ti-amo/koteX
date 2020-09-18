@@ -5,11 +5,18 @@ import MiniLogo from '../../assets/SVGComponents/MiniLogo'
 import SearchIcon from '../../assets/SVGComponents/SearchIcon'
 import * as firebase from 'firebase'
 import { Redirect } from 'react-router-dom'
+import algoliasearch from 'algoliasearch';
+import '../../assets/styles/searchresult.css'
+
+const client = algoliasearch('J4L10CQZ7H', '62d0af38374665e8fdb7ae8ce83c0ecf');
+const index = client.initIndex('name');
+
 
 const Header = () => {
 
   const [isSignIn, setIsSignIn] = useState(false)
   const [userName, setUserName] = useState("Đăng nhập")
+  const [searchResult, setSearchResult] = useState([])
 
   useEffect(() => {
 
@@ -19,13 +26,28 @@ const Header = () => {
     })
   }, [])
 
+
+  const getProduct = (e) => {
+    if (e.target.value.length === 0 ) setSearchResult([])
+    else {
+      console.log("HERE", e.target.value)
+      index.search(e.target.value).then(function (responses) {
+        console.log("RESPONE", responses.hits)
+        setSearchResult(responses.hits)
+      });
+    }
+  }
+
   const signOut = () => {
-    firebase.auth().signOut().then(function() {
+    firebase.auth().signOut().then(function () {
       // Sign-out successful.
-    }).catch(function(error) {
+    }).catch(function (error) {
       // An error happened.
     });
+    document.cookie = false
   }
+  console.log("RESULT", searchResult)
+
   return (
     <header>
       <nav className="navbar">
@@ -51,8 +73,11 @@ const Header = () => {
               </div>
             </div>
             <div className="input-field second-wrap">
-              <input id="search" type="text" placeholder="Tìm kiếm" />
+              <input id="search" type="text" placeholder="Tìm kiếm" onChange={(e) => getProduct(e)} />
+
             </div>
+
+
             <div className="input-field third-wrap">
               <button className="btn-search" type="button">
                 <SearchIcon style={{ width: "1rem" }} />
@@ -64,7 +89,7 @@ const Header = () => {
             <span className="action-login">
               <p>{userName}</p>
             </span>
-            {isSignIn? (
+            {isSignIn ? (
               <ul className="dropdown-user">
                 <li>
                   <a href="/users/info">Thông tin cá nhân</a>
@@ -87,6 +112,16 @@ const Header = () => {
           </div>
         </div>
       </nav>
+      
+      <div className={`${searchResult.length !==0 ? "searchbox" : ''} search-result`}>
+            {searchResult.map((item, idx) => (
+              <div key={idx} className="search-result_element">
+                <img className="img-fluid" src={item.image_url} alt=""></img>
+                <a href={`/product/${item.product_id}`}>{item.name}</a>
+              </div>
+            ))}
+          </div>
+
     </header>
 
   )

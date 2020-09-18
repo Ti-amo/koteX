@@ -19,21 +19,21 @@ const ProductDetail = () => {
         fetchData()
     }, [])
 
-    useEffect(() =>{
-        const product = data ?  data.merchant_store : "[]"
-        let list = JSON.parse(product.replaceAll("'", "\""));    
+    useEffect(() => {
+        const product = data ? data.merchant_store : "[]"
+        let list = JSON.parse(product.replaceAll("'", "\""));
         const minRest = Math.min(...list.map(({ price }) => price));
         // console.log(minRest);
         setStores(list)
         setCheapestPrice(minRest)
-    },[data])
+    }, [data])
 
     if (!data) {
-    
-    return(<p>Loading...</p>)
+
+        return (<p>Loading...</p>)
     }
 
-    
+
     console.log("STORE", stores, "PRICE", cheapestPrice)
 
     return (
@@ -73,13 +73,13 @@ const ProductDetail = () => {
                     <div className="product-slide-container">
                         <div className="big-image">
                             <img
-                                alt="Microsoft Surface Pro 7 2019 PUV-00001 i5 8GB 256GB"
-                                src="https://img.sosanhgia.com/images/500x0/d36c5cd13d1b4fc3bd83c8faf999aeea/microsoft-surface-pro-7-2019-puv00001-i5-8gb-256gb.jpeg"
+                                alt="laptop"
+                                src={data.image_url}
                             />
                         </div>
                     </div>
                     <div className="product-info-container">
-                        <a href="https://www.sosanhgia.com/p211898-microsoft-surface-pro-7-2019-puv-00001-i5-8gb-256gb.html">
+                        <a href="#">
                             <h1>{data ? data.name : ''}</h1>
                         </a>
                         <div className="rating-star">
@@ -113,13 +113,13 @@ const ProductDetail = () => {
                         </div>
                         <div className="priority-store">
                             <span>Giá tốt từ nơi bán:</span>
-                            <span className="store-price product-price">{cheapestPrice}</span>
+                            <span className="store-price product-price">{cheapestPrice.toLocaleString()}</span>
                             <div className="merchant-logo-wrapper">
                                 <div className="merchant-logo">
-                                    <img src="https://img.sosanhgia.com/images/1ef1aee0e2cb435893d32fe07031ec0c/shopee-mall.jpg"  alt="card"/>
+                                    <img src="https://img.sosanhgia.com/images/1ef1aee0e2cb435893d32fe07031ec0c/shopee-mall.jpg" alt="card" />
                                 </div>
                             </div>
-                            <a className="button" href="/#">
+                            <a className="button" href="#">
                                 Đến nơi bán
           </a>
                         </div>
@@ -131,39 +131,39 @@ const ProductDetail = () => {
                 <div className="container">
                     <h4 className="header">Bảng giá bán</h4>
                     {stores.map((item, idx) => {
-                        return(
-                            <article className="product">
-                        <div className="img">
-                            <img
-                                src="https://cf.shopee.vn/file/973436ce64fcd326a4d3c7d93e43b5be"
-                                alt="card"
-                            />
-                        </div>
-                        <div className="detail">
-                            <div className="product-name">
-                            {data ? data.name : ''}<span className="brand">Shopee</span>
-                                <div className="promotions">
-                                    <a href="/#" className="button">Xem khuyến mãi</a>
+                        return (
+                            <article key={idx} className="product">
+                                <div className="img">
+                                    <img
+                                        src={data.image_url}
+                                        alt="card"
+                                    />
                                 </div>
-                            </div>
-                            <div className="merchant-logo-wrapper">
-                                <div className="merchant-logo">
-                                    <img src="https://img.sosanhgia.com/images/1ef1aee0e2cb435893d32fe07031ec0c/shopee-mall.jpg" alt="card"/>
+                                <div className="detail">
+                                    <div className="product-name">
+                                        {data ? data.name : ''}<span className="brand">Shopee</span>
+                                        <div className="promotions">
+                                            <a href="#" className="button">Xem khuyến mãi</a>
+                                        </div>
+                                    </div>
+                                    <div className="merchant-logo-wrapper">
+                                        <div className="merchant-logo">
+                                            {/* <img src="https://img.sosanhgia.com/images/1ef1aee0e2cb435893d32fe07031ec0c/shopee-mall.jpg" alt="card" /> */}
+                                        </div>
+                                    </div>
+                                    <div className="price-wrapper">
+                                        <div className="product-price grey-text">{item.price.toLocaleString()}</div>
+                                        <div className="date-update">Cập nhật 7 giờ trước</div>
+                                    </div>
+                                    <div className="product-go-action">
+                                        <a href={item.url_store} target="_blank" rel="noopener noreferrer" className="button">Đến nơi bán</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="price-wrapper">
-                                <div className="product-price grey-text">{item.price}</div>
-                                <div className="date-update">Cập nhật 7 giờ trước</div>
-                            </div>
-                            <div className="product-go-action">
-                                <a href="/#" className="button">Đến nơi bán</a>
-                            </div>
-                        </div>
-                    </article>
+                            </article>
                         )
                     })}
-                    
-                    
+
+
                 </div>
             </section>
         </main>

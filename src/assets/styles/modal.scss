@@ -1,0 +1,43 @@
+.opacity-container {
+    opacity: 0.5;
+}
+.modal {
+    display: block;
+    background-color: white;
+    height: 100%;
+    position: fixed;
+    margin: 10rem auto;
+    padding: 3em;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    left: 50%;
+    transform: translateX(-50%);
+
+    @media (min-width: 60em) {
+        height: 75%;
+        margin: 10rem  auto;
+        max-height: 57em;
+        max-width: 100em;
+        width: 85%;
+    }
+
+    >iframe,
+    >div {
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.close {
+    background-color: #D82B28;
+    color: white;
+    font-size: 24px;
+    padding: 8px 12px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    text-decoration: none;
+    top: 0;
+    z-index: 1;
+}
